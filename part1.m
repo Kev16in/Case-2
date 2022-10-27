@@ -15,17 +15,24 @@ legend('Susceptible','Infected','Recovered','Deceased');
 xlabel("Time in Weeks");
 ylabel("Fraction of Population");
 %%
-changeMatrix=[0.95 0.04 0 0;
-    0.05 0.85 0 0;
-    0 0.1 1 0;
-    0 0.01 0 1];
+changeMatrix=[0.85 0.1 0 0;
+    0.15 0.75 0.05 0;
+    0 0.1 0.95 0;
+    0 0.05 0 1];
 newSIRD=[1;0;0;0];
 change2=changeMatrix*newSIRD;
 changeSIRD2=[];
 changeSIRD2=cat(2,changeSIRD2,change2);
-for i = 1:199
+for i = 1:99
     change2=changeMatrix*change2; %%use the current change vector to get new change vector
     changeSIRD2=cat(2,changeSIRD2,change2); %%Concatenate change vector to empty array
 end
 figure;
 plot(changeSIRD2');
+legend('Susceptible','Infected','Recovered','Deceased');
+xlabel("Time in Weeks");
+ylabel("Fraction of Population");
+
+% When it is possible to become reinfected with a new disease (or same one)
+% then the number of deaths as time goes on increases exponentially and
+% eventually everyone dies no matter what. 
