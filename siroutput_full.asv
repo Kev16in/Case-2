@@ -19,10 +19,10 @@ ic_rec = x(6);
 ic_fatality = x(7);
 
 % Set up SIRD within-population transmission matrix
-A = [1-k_infections 0 1-k_infections 0;
-    k_infections 1-k_fatality-k_recover k_infections 0;
-    0 k_recover 0 0;
-    0 k_fatality 0 1];
+A = [0 0 0 0;
+    k_infections;
+    k_fatality;
+    k_recover];
 
 % The next line creates a zero vector that will be used a few steps.
 B = zeros(4,1);
@@ -37,4 +37,5 @@ y = lsim(sys_sir_base,zeros(t,1),linspace(0,t-1,t),x0);
 
 % return the output of the simulation
 f = y;
+
 end
