@@ -1,4 +1,5 @@
-coviddata = COVID_STLmetro(:,5); % TO SPECIFY
+
+coviddata = table2array(COVID_STLmetro(:,5:6)); % TO SPECIFY
 t = 798; % TO SPECIFY
 
 % The following line creates an 'anonymous' function that will return the cost (i.e., the model fitting error) given a set
@@ -14,27 +15,28 @@ sirafun= @(x)siroutput(x,t,coviddata);
 % Set A and b to impose a parameter inequality constraint of the form A*x < b
 % Note that this is imposed element-wise
 % If you don't want such a constraint, keep these matrices empty.
-A = [];
-b = [];
+A = [1,0,1,1,1,1,1];
+b = [0.2];
 
 %% set up some fixed constraints
 % Set Af and bf to impose a parameter constraint of the form Af*x = bf
 % Hint: For example, the sum of the initial conditions should be
 % constrained
 % If you don't want such a constraint, keep these matrices empty.
-Af = [];
-bf = [];
+Af = [0.8,0.15,0.05,1,1,1,1;...
+    0.8,0.15,0.05,1,1,1,1];
+bf = [0.2,0.1];
 
 %% set up upper and lower bound constraints
 % Set upper and lower bounds on the parameters
 % lb < x < ub
 % here, the inequality is imposed element-wise
 % If you don't want such a constraint, keep these matrices empty.
-ub = []';
-lb = []';
+ub = [1,1,1,1,1,1,1]';
+lb = [0,0,0,0,0,0,0]';
 
 % Specify some initial parameters for the optimizer to start from
-x0 = [STLmetroPop,0,0,0]; 
+x0 = [0.2,0.1,0.7,1,0,0,0]; 
 
 % This is the key line that tries to opimize your model parameters in order to
 % fit the data
@@ -48,6 +50,8 @@ x = fmincon(sirafun,x0,A,b,Af,bf,lb,ub);
 Y_fit = siroutput_full(x,t);
 
 figure(1);
-
+plot(Y_fit);
+legend('S','I','R','D');
+xlabel('Time')
 % Make some plots that illustrate your findings.
 % TO ADD
