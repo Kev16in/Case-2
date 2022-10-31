@@ -1,7 +1,6 @@
 %% This function takes three inputs
 % x - a set of parameters
 % t - the number of time-steps you wish to simulate
-
 function f = siroutput_full(x,t)
 
 % Here is a suggested framework for x.  However, you are free to deviate
@@ -19,10 +18,10 @@ ic_rec = x(6);
 ic_fatality = x(7);
 
 % Set up SIRD within-population transmission matrix
-A = [1-k_infections 0 1-k_infections 0;
-    k_infections 1-k_fatality-k_recover k_infections 0;
-    0 k_recover 0 0;
-    0 k_fatality 0 1];
+A = [(1-k_infections) 0 0 0;
+    (k_infections) (1-k_fatality-k_recover) 0 0;
+    0 (k_recover) 1 0;
+    0 (k_fatality) 0 1];
 
 % The next line creates a zero vector that will be used a few steps.
 B = zeros(4,1);
