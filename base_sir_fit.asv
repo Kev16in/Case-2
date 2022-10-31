@@ -1,5 +1,5 @@
 
-coviddata = table2array(COVID_STLmetro(:,5:6))*100000/STLmetroPop; % TO SPECIFY
+coviddata = table2array(COVID_STLmetro(:,5:6))/(100000 * STLmetroPop); % TO SPECIFY
 t = 798; % TO SPECIFY
 
 % The following line creates an 'anonymous' function that will return the cost (i.e., the model fitting error) given a set
@@ -15,8 +15,9 @@ sirafun= @(x)siroutput(x,t,coviddata);
 % Set A and b to impose a parameter inequality constraint of the form A*x < b
 % Note that this is imposed element-wise
 % If you don't want such a constraint, keep these matrices empty.
-A = [0,1,0,0,0,0,0];
-b = 0.4;
+A = [0,1,1,0,0,0,0;
+    1,0,0,0,0,0,0];
+b = [1,1];
 
 %% set up some fixed constraints
 % Set Af and bf to impose a parameter constraint of the form Af*x = bf
@@ -31,11 +32,11 @@ bf = 1;
 % lb < x < ub
 % here, the inequality is imposed element-wise
 % If you don't want such a constraint, keep these matrices empty.
-ub = [1,1,1,1,0,1,1]';
-lb = [0,0,0,1,1,0,0]';
+ub = [1,1,1,1,1,1,1]';
+lb = [0,0,0,0,0,0,0]';
 
 % Specify some initial parameters for the optimizer to start from
-x0 = [0.01,0.005,0.03,1,0,0,0]; 
+x0 = [0.5,0.3,0.02,1,0,0,0]; 
 
 % This is the key line that tries to opimize your model parameters in order to
 % fit the data
@@ -52,8 +53,8 @@ figure;
 hold on
 plot(Y_fit);
 xlabel('Time')
-% plot(coviddata(:,1))
-% plot(coviddata(:,2))
-legend('S','I','R','D','Actual Case Numbers', 'Actual deaths');
+plot(coviddata(:,1))
+plot(coviddata(:,2))
+legend('S','I','R','D','Actual Cases', 'Actual Deaths');
 % Make some plots that illustrate your findings.
 % TO ADD
