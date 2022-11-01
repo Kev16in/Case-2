@@ -11,9 +11,8 @@ for i = 1:9
     changeSIRD=cat(2,changeSIRD,change); %%Concatenate change vector to empty array
 end 
 plot(changeSIRD');
-title('Simulation of Dynamical Model (No reinfections)')
 legend('Susceptible','Infected','Recovered','Deceased');
-xlabel("Time in Months");
+xlabel("Time in Weeks");
 ylabel("Fraction of Population");
 %%
 changeMatrix=[0.85 0.1 0 0;
@@ -30,7 +29,7 @@ for i = 1:99
 end
 figure;
 plot(changeSIRD2');
-title('Simulation of dynamical model (Reinfections Allowed)')
+title('Simulation of dynamical model (No reinfe
 legend('Susceptible','Infected','Recovered','Deceased');
 xlabel("Time in Weeks");
 ylabel("Fraction of Population");

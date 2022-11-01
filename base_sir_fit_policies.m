@@ -14,8 +14,8 @@ sirafun= @(x)siroutput_policy(x,t,coviddata);
 % Set A and b to impose a parameter inequality constraint of the form A*x < b
 % Note that this is imposed element-wise
 % If you don't want such a constraint, keep these matrices empty.
-A = [0,1,1,0,0,0,0;
-    1,0,0,0,0,0,0];
+A = [0,1,1,0,0,0,0,0;
+    1,0,0,0,0,0,0,0];
 b = [1,1];
 
 %% set up some fixed constraints
@@ -23,7 +23,7 @@ b = [1,1];
 % Hint: For example, the sum of the initial conditions should be
 % constrained
 % If you don't want such a constraint, keep these matrices empty.
-Af = [0,0,0,1,1,1,1];
+Af = [0,0,0,0,1,1,1,1];
 bf = 1;
 
 %% set up upper and lower bound constraints
@@ -31,26 +31,26 @@ bf = 1;
 % lb < x < ub
 % here, the inequality is imposed element-wise
 % If you don't want such a constraint, keep these matrices empty.
-ub = [1,1,1,1,1,1,1]';
-lb = [0,0,0,0,0,0,0]';
+ub = [1,1,1,1,1,1,1,1]';
+lb = [0,0,0,0,0,0,0,0]';
 
 % Specify some initial parameters for the optimizer to start from
-x0 = [0.2,0.3,0.1,1,0,0,0]; 
+x0 = [0.2,0.3,0.1,0.1,1,0,0,0]; 
 
 % This is the key line that tries to opimize your model parameters in order to
 % fit the data
 % note tath you 
-x = fmincon(sirafun,x0,A,b,Af,bf,lb,ub);
+xP = fmincon(sirafun,x0,A,b,Af,bf,lb,ub);
 
 %plot(Y);
 %legend('S','I','R','D');
 %xlabel('Time')
 
-Y_fit = siroutput_full_policies(x,t);
+Y_fit_Policy = siroutput_full_policies(xP,t);
 
 figure;
 hold on
-plot(Y_fit);
+plot(Y_fit_Policy);
 xlabel('Time')
 plot(1-coviddata(:,1))
 plot(coviddata(:,2))

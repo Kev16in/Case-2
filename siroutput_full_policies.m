@@ -7,12 +7,13 @@ function f = siroutput_full_policies(x,t)
 k_infections = x(1);
 k_fatality = x(2);
 k_recover = x(3);
+k_mask_mandate = x(4);
 
 % set up initial conditions
-ic_susc = x(4);
-ic_inf = x(5);
-ic_rec = x(6);
-ic_fatality = x(7);
+ic_susc = x(5);
+ic_inf = x(6);
+ic_rec = x(7);
+ic_fatality = x(8);
 
 % Set up SIRD within-population transmission matrix
 A = [(1-k_infections) 0 k_recover 0;
