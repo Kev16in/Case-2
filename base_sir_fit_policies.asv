@@ -1,4 +1,3 @@
-
 coviddata = table2array(COVID_STLmetro(:,5:6))/(100000 * STLmetroPop); % TO SPECIFY
 t = 798; % TO SPECIFY
 
@@ -9,7 +8,7 @@ t = 798; % TO SPECIFY
 % and see the sectiono on 'passing extra arguments'
 % Basically, 'sirafun' is being set as the function siroutput (which you
 % will be designing) but with t and coviddata specified.
-sirafun= @(x)siroutput(x,t,coviddata);
+sirafun= @(x)siroutput_policy(x,t,coviddata);
 
 %% set up rate and initial condition constraints
 % Set A and b to impose a parameter inequality constraint of the form A*x < b
@@ -36,7 +35,7 @@ ub = [1,1,1,1,1,1,1]';
 lb = [0,0,0,0,0,0,0]';
 
 % Specify some initial parameters for the optimizer to start from
-x0 = [0.5,0.3,0.02,1,0,0,0]; 
+x0 = [0.2,0.3,0.1,1,0,0,0]; 
 
 % This is the key line that tries to opimize your model parameters in order to
 % fit the data
@@ -47,14 +46,14 @@ x = fmincon(sirafun,x0,A,b,Af,bf,lb,ub);
 %legend('S','I','R','D');
 %xlabel('Time')
 
-Y_fit = siroutput_full(x,t);
+Y_fit = siroutput_full_policies(x,t);
 
 figure;
 hold on
 plot(Y_fit);
 xlabel('Time')
-plot(coviddata(:,1))
+plot(1-coviddata(:,1))
 plot(coviddata(:,2))
-legend('S','I','R','D','Actual Cases', 'Actual Deaths');
+legend('S','I','R','D','Actual Suseptable', 'Actual Deaths');
 % Make some plots that illustrate your findings.
 % TO ADD
