@@ -1,0 +1,122 @@
+% % The following matrix implements the SIR dynamics example from Chapter 9.3
+% % of the textbook.
+% A = [1-x(1) 0 0.05 0;
+%     x(1) 1-2.073016355994013e-04-5.422646578931399e-05 0 0;
+%     0 2.073016355994013e-04 0.95 0;
+%     0 5.422646578931399e-05 0 1];
+% 
+% % The following matrix is needed to use the lsim function to simulate the
+% % system in question
+% B = zeros(4,1);
+% 
+% % initial conditions (i.e., values of S, I, R, D at t=0).
+% x0 = x(4:7);
+% 
+% % Here is a compact way to simulate a linear dynamical system.
+% % Type 'help ss', 'help lsim', etc., to learn about how these functions work!!
+% sys_sir_base = ss(A,B,eye(4),zeros(4,1),1);
+% Y_Phase1 = lsim(sys_sir_base,zeros(250,1),linspace(0,249,250),x0);
+% 
+% % plot the output trajectory
+% figure;
+% plot(Y_Phase1);
+% legend('S','I','R','D');
+% xlabel('Time')
+% ylabel('Percentage Population');
+% %%
+% % The following matrix implements the SIR dynamics example from Chapter 9.3
+% % of the textbook.
+% A = [1-2.805070365844005e-05 0 0.05 0;
+%     2.805070365844005e-05 1-2.073016355994013e-04-5.422646578931399e-05 0 0;
+%     0 2.073016355994013e-04 0.95 0;
+%     0 5.422646578931399e-05 0 1];
+% 
+% % The following matrix is needed to use the lsim function to simulate the
+% % system in question
+% B = zeros(4,1);
+% 
+% % initial conditions (i.e., values of S, I, R, D at t=0).
+% x0 = Y_Phase1(250,:);
+% 
+% % Here is a compact way to simulate a linear dynamical system.
+% % Type 'help ss', 'help lsim', etc., to learn about how these functions work!!
+% sys_sir_base = ss(A,B,eye(4),zeros(4,1),1);
+% Y_Phase2 = lsim(sys_sir_base,zeros(250,1),linspace(0,249,250),x0);
+% 
+% % plot the output trajectory
+% figure;
+% plot(Y_Phase2);
+% legend('S','I','R','D');
+% xlabel('Time')
+% ylabel('Percentage Population');
+% %%
+% % The following matrix implements the SIR dynamics example from Chapter 9.3
+% % of the textbook.
+% A = [1-2.805070365844005e-05 0 0.05 0;
+%     2.805070365844005e-05 1-2.073016355994013e-04-5.422646578931399e-05 0 0;
+%     0 2.073016355994013e-04 0.95 0;
+%     0 5.422646578931399e-05 0 1];
+% 
+% % The following matrix is needed to use the lsim function to simulate the
+% % system in question
+% B = zeros(4,1);
+% 
+% % initial conditions (i.e., values of S, I, R, D at t=0).
+% x0 = Y_Phase2(250,:);
+% 
+% % Here is a compact way to simulate a linear dynamical system.
+% % Type 'help ss', 'help lsim', etc., to learn about how these functions work!!
+% sys_sir_base = ss(A,B,eye(4),zeros(4,1),1);
+% Y_Phase3 = lsim(sys_sir_base,zeros(298,1),linspace(0,297,298),x0);
+% 
+% % plot the output trajectory
+% figure;
+% plot(Y_Phase3);
+% legend('S','I','R','D');
+% xlabel('Time')
+% ylabel('Percentage Population');
+% 
+% Phase_combined=cat(1, Y_Phase1, Y_Phase2, Y_Phase3);
+% figure;
+% plot(Phase_combined);
+%% Phase 1
+Phase1=siroutput_full_policies([x(1),x(2),x(3),x(4),x(5),x(6),x(7)], 250);
+figure;
+plot(Phase1);
+legend('S','I','R','D');
+xlabel('Time')
+ylabel('Percentage Population');
+Phase2_starting_values=Phase1(250,:);
+Phase1=Phase1(1:249,:);
+
+%% Phase 2
+Phase2=siroutput_full_policies([x(1)*0.5,x(2),x(3),Phase2_starting_values(1:4)], 251);
+figure;
+plot(Phase2);
+legend('S','I','R','D');
+xlabel('Time')
+ylabel('Percentage Population');
+Phase3_starting_values=Phase2(251,:);
+Phase2=Phase2(1:250,:);
+%% Phase 3
+Phase3=siroutput_full_policies([x(1)*0.5,x(2)*0.8,x(3)*1.5,Phase3_starting_values(1:4)], 299);
+figure;
+plot(Phase3);
+legend('S','I','R','D');
+xlabel('Time')
+ylabel('Percentage Population');
+
+%% Phase Combined and Percent Change
+
+Phase_combined=cat(1, Phase1, Phase2, Phase3);
+figure;
+hold on
+plot(Phase_combined);
+plot(1 - coviddata(:,1))
+plot(Y_fit(:,1))
+legend('S','I','R','D','Actual Susceptible','');
+xlabel('Time')
+ylabel('Percentage Population');
+
+Case_percentage_change=1-(Phase_combined(798,2)+Phase_combined(798,3)+Phase_combined(798,4))/(Y_fit(798,2)+Y_fit(798,3)+Y_fit(798,4));
+Deaths_percentage_change=1-(Phase_combined(798,4)/Y_fit(798,4));

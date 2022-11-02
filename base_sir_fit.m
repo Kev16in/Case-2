@@ -55,6 +55,7 @@ plot(Y_fit);
 xlabel('Time')
 plot(1-coviddata(:,1))
 plot(coviddata(:,2))
-legend('S','I','R','D','Actual Suseptable', 'Actual Deaths');
+plot(coviddata(:,1))
+legend('S','I','R','D','Actual Susceptible', 'Actual Deaths','Actual Cases');
 % Make some plots that illustrate your findings.
 % TO ADD

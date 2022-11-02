@@ -17,9 +17,9 @@ ic_rec = x(6);
 ic_fatality = x(7);
 
 % Set up SIRD within-population transmission matrix
-A = [(1-k_infections) 0 k_recover 0;
+A = [(1-k_infections) 0 0.05 0;
     (k_infections) (1-k_fatality-k_recover) 0 0;
-    0 (k_recover) (1-k_recover) 0;
+    0 (k_recover) 0.95 0;
     0 (k_fatality) 0 1];
 
 % A = [(1-k_infections) 0 0 0;
