@@ -18,14 +18,14 @@ stateChanger = [0.85 0.1 0 0; 0.15 0.75 0 0;...
 changeSIRD = [];
 change=stateChanger*SIRD; %%Calculate change for first week
 changeSIRD=cat(2,changeSIRD,change); %%Concatenate change vector to empty array
-for i = 1:9 
+for i = 1:99 
     change=stateChanger*change; %%use the current change vector to get new change vector
     changeSIRD=cat(2,changeSIRD,change); %%Concatenate change vector to empty array
 end 
 plot(changeSIRD');
 title('Simulation of Dynamical Model (No reinfections)')
 legend('Susceptible','Infected','Recovered','Deceased');
-xlabel("Time in Months");
+xlabel("Time in Weeks");
 ylabel("Fraction of Population");
 
 % This is the graph of what our simulation gave us based on the parameters
