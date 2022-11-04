@@ -3,4 +3,4 @@
 
 load("COVIDdata.mat")
 
-
+run "base_sir_fit.m"

@@ -56,6 +56,9 @@ Y_fitMock_before=cat(2,Y_fitMock_before,zeros(100,2));
 Y_fitMock_combined=cat(1,Y_fitMock_before(1:99,:),Y_fitMock_after);
 figure;
 hold on;
+title("State of Population throughout Global Pandemic Simulation")
+xlabel("Time (Days)")
+ylabel("Fraction of the total population")
 plot(Y_fitMock_combined);
 plot(cumulativeDeaths');
 plot(newInfections');

@@ -1,4 +1,4 @@
-
+load("COVIDdata.mat")
 coviddata = table2array(COVID_STLmetro(:,5:6))/(100000 * STLmetroPop); % TO SPECIFY
 t = 798; % TO SPECIFY
 
@@ -52,10 +52,12 @@ Y_fit = siroutput_full(x,t);
 figure;
 hold on
 plot(Y_fit);
-xlabel('Time')
+title("Best fit model vs. Real data")
+ylabel("Fration of the Population In That State")
+xlabel('Time (Days)')
+ylim([0 0.01])
 plot(1-coviddata(:,1))
 plot(coviddata(:,2))
-plot(coviddata(:,1))
-legend('S','I','R','D','Actual Susceptible', 'Actual Deaths','Actual Cases');
+legend('S','I','R','D','Actual Susceptible', 'Actual Deaths');
 % Make some plots that illustrate your findings.
 % TO ADD
