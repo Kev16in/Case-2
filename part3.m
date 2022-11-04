@@ -2,7 +2,7 @@
 %%% Although it has copied code, the inputs are different to accomidate for
 %%% new state varibles that we eventually add to our model 
 
-%%% The files that are called in this file are siroutput_part3_before.m,
+%%% The files that are called in this file are siroutput_full.m, siroutput_part3_before.m,
 %%% siroutput_part3_after.m, and siroutput_full_part3_after.m
 
 %% Before Vaccinations
@@ -88,3 +88,6 @@ plot(Y_fitMock_combined);
 plot(cumulativeDeaths');
 plot(newInfections');
 legend('S','I','R','D','V','B','Cumulative Deaths', 'New Infections');
+vaxpop = Y_fitMock_combined(:,5);
+vaxbreak = Y_fitMock_combined(:,6);
+save('competition.mat','vaxpop','vaxbreak');
