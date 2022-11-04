@@ -14,11 +14,11 @@ k_vaccinated = x(4);
 k_breakthrough = x(5);
 
 % Set up SIRD within-population transmission matrix
-A = [(1-k_infections-k_vaccinated) 0                        0.001     0 0                  0.02;
+A = [(1-k_infections-k_vaccinated) 0                        0.001 0 0                  0.02;
     (k_infections)                 (1-k_fatality-k_recover) 0     0 0                  0;
     0                              (k_recover)              0.998 0 0                  0;
     0                              (k_fatality)             0     1 0                  0;
-    (k_vaccinated)                 0                        0.001  0 (1-k_breakthrough) 0;
+    (k_vaccinated)                 0                        0.001 0 (1-k_breakthrough) 0;
     0                              0                        0     0 (k_breakthrough)   0.98];
 
 % The next line creates a zero vector that will be used a few steps.
