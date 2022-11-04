@@ -24,13 +24,6 @@ xMock_before = fmincon(sirafun,x0Mock_before,A,b,Af,bf,lb,ub);
 
 Y_fitMock_before = siroutput_full(xMock_before,t);
 
-%hold on 
-figure;
-plot(Y_fitMock_before)
-%plot(cumulativeDeaths)
-%plot(newInfections)
-legend('S','I','R','D','Cumulative Deaths', 'New Infections')
-
 %% After Vaccinations
 t = 266;
 sirafun= @(x)siroutput_part3_after(x,t,mockData_after_vaccine);
@@ -44,18 +37,12 @@ bf = 1;
 
 ub = [1,1,1,1,1,1,1,1,1,1,1]';
 lb = [0,0,0,0,0,0,0,0,0,0,0]';
-x0Mock_after = [xMock_before(1:3),0.01,0,Y_fitMock_before(100,:),0,0]; 
+x0Mock_after = [xMock_before(1:3),0.1,0,Y_fitMock_before(100,:),0,0]; 
 
 
 xMock_after = fmincon(sirafun,x0Mock_after,A,b,Af,bf,lb,ub);
 
 Y_fitMock_after = siroutput_full_part3_after(xMock_after,t);
-
-%hold on
-figure;
-plot(Y_fitMock_after)
-%plot(cumulativeDeaths) plot(newInfections)
-legend('S','I','R','D','V','B','Cumulative Deaths', 'New Infections')
 
 %% Combined Data
 Y_fitMock_before=cat(2,Y_fitMock_before,zeros(100,2));
