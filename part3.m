@@ -35,16 +35,16 @@ legend('S','I','R','D','Cumulative Deaths', 'New Infections')
 t = 266;
 sirafun= @(x)siroutput_part3_after(x,t,mockData_after_vaccine);
 
-A = [0,1,1,0,0,0,0,0,0,0;
-    1,0,0,1,0,0,0,0,0,0];
+A = [0,1,1,0,0,0,0,0,0,0,0;
+    1,0,0,1,0,0,0,0,0,0,0];
 b = [1,1];
 
-Af = [0,0,0,0,0,1,1,1,1,1];
+Af = [0,0,0,0,0,1,1,1,1,1,1];
 bf = 1;
 
-ub = [1,1,1,1,1,1,1,1,1,1]';
-lb = [0,0,0,0,0,0,0,0,0,0]';
-x0Mock_after = [xMock_before(1:3),0.01,0,Y_fitMock_before(100,:),0]; 
+ub = [1,1,1,1,1,1,1,1,1,1,1]';
+lb = [0,0,0,0,0,0,0,0,0,0,0]';
+x0Mock_after = [xMock_before(1:3),0.01,0,Y_fitMock_before(100,:),0,0]; 
 
 
 xMock_after = fmincon(sirafun,x0Mock_after,A,b,Af,bf,lb,ub);
@@ -55,14 +55,14 @@ Y_fitMock_after = siroutput_full_part3_after(xMock_after,t);
 figure;
 plot(Y_fitMock_after)
 %plot(cumulativeDeaths) plot(newInfections)
-legend('S','I','R','D','V','Cumulative Deaths', 'New Infections')
+legend('S','I','R','D','V','B','Cumulative Deaths', 'New Infections')
 
 %% Combined Data
-Y_fitMock_before=cat(2,Y_fitMock_before,zeros(100,1));
+Y_fitMock_before=cat(2,Y_fitMock_before,zeros(100,2));
 Y_fitMock_combined=cat(1,Y_fitMock_before(1:99,:),Y_fitMock_after);
 figure;
 hold on;
 plot(Y_fitMock_combined);
 plot(cumulativeDeaths');
 plot(newInfections');
-legend('S','I','R','D','V','Cumulative Deaths', 'New Infections');
+legend('S','I','R','D','V','B','Cumulative Deaths', 'New Infections');
