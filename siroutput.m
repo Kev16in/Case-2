@@ -17,7 +17,7 @@ ic_rec = x(6);
 ic_fatality = x(7);
 
 % Set up SIRD within-population transmission matrix
-A = [(1-k_infections) 0 0.05 0;
+A = [(1-k_infections) 0 0.05 0;% each column must sum up to 1 which is why we do 1-k_rates
     (k_infections) (1-k_fatality-k_recover) 0 0;
     0 (k_recover) 0.95 0;
     0 (k_fatality) 0 1];
@@ -42,4 +42,10 @@ y = lsim(sys_sir_base,zeros(t,1),linspace(0,t-1,t),x0);
 % Hint: This is a central part of this case study!  choices here will have
 % a big impact!
 f = norm(y(:,1) - (1 - data(:,1))) + norm(y(:,4) - (data(:,2)));
+% The cost is calculated by the taking the norm of the difference between
+% our susceptible fraction and the given susceptible fraction and summing
+% that to the norm of the difference between
+% our death fraction and the given death fraction. The closer our fractions
+% matches with the actual fractions, the lower our norms will be which will
+% lower the cost as well
 end

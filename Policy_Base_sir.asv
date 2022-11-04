@@ -53,5 +53,4 @@ Case_percentage_change=1-(Phase_combined(798,2)+Phase_combined(798,3)+Phase_comb
 %(array without any mandates) and subtracting the quotient from 1
 Deaths_percentage_change=1-(Phase_combined(798,4)/Y_fit(798,4));
 %This calculates the percent change by dividing the last death percentage
-%in Phase_combined by the last death percentage in Y_fit and subtracting
-%the quotient from 1.
+%in Phase_combined by the last state percentages in Y_fit
